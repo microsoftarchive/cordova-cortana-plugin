@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.msopentech.cortana" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>Cortana</name>
+
+    <!-- windows -->
+    <platform name="windows">
+        <js-module name="Cortana.js" src="www/cortana.js">
+            <clobbers target="cordova.plugins.cortana" />
+        </js-module>
+
+        <js-module src="src/windows/CortanaProxy.js" name="CortanaProxy">
+            <runs target="" />
+        </js-module>
+
+        <config-file target="package.phone.appxmanifest" parent="/Package/Capabilities">
+            <DeviceCapability Name="microphone" />
+        </config-file>
+    </platform>
+</plugin>
