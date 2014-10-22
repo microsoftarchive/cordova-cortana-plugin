@@ -7,8 +7,7 @@ var exec = require('cordova/exec'),
 
 var Cortana = function() {
     this._events = {
-        onVoiceCommand: cordova.addDocumentEventHandler('onvoicecommand'),
-        onInstallVoiceCommands: cordova.addStickyDocumentEventHandler('oninstallvoicecommands')
+        onVoiceCommand: cordova.addDocumentEventHandler('onvoicecommand')
     };
 
     // If we just registered the first handler, make sure native listener is started.
@@ -25,7 +24,6 @@ Cortana.prototype.installVoiceCommandSet = function (vcdUrl, success, error) {
     argscheck.checkArgs("sFF", "installVoiceCommandSet", arguments);
 
     var win = function () {
-        cordova.fireDocumentEvent('oninstallvoicecommands');
         success && typeof success === 'function' && success();
     };
 
@@ -34,6 +32,21 @@ Cortana.prototype.installVoiceCommandSet = function (vcdUrl, success, error) {
     };
 
     exec(win, fail, "Cortana", "installVoiceCommandSet", [vcdUrl]);
+};
+
+Cortana.prototype.setPhraseList = function (vcdSetId, vcdListId, vcdListValues, success, error) {
+
+    argscheck.checkArgs("ssaFF", "installVoiceCommandSet", arguments);
+
+    var win = function () {
+        success && typeof success === 'function' && success();
+    };
+
+    var fail = function(err) {
+        error && typeof error === "function" && error(err);
+    };
+
+    exec(win, fail, "Cortana", "setPhraseList", [vcdSetId, vcdListId, vcdListValues]);
 };
 
 Cortana.prototype._fireVoiceCommandEvent = function(voiceCommand) {
